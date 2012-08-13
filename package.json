@@ -10,4 +10,5 @@
 , "bugs" :
   { "url" : "http://github.com/ppc-repo/node-amqp/issues"
   }
+, "main": "./lib/amqpFactory"
 }
