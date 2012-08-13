@@ -1,5 +1,5 @@
 var assert = require('assert');
-var amqp = require('../amqp');
+var amqp = require('../lib/amqp');
 var exec = require('child_process').exec;
 
 var options = global.options || {};

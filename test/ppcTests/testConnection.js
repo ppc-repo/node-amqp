@@ -5,7 +5,7 @@
  * Time: 1:57 PM
  * To change this template use File | Settings | File Templates.
  */
-var amqpFactory = require('../../amqpFactory');
+var amqpFactory = require('../../lib/amqpFactory');
 var assert = require('assert');
 var config = require('../config/config');
 

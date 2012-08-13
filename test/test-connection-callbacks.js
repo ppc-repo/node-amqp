@@ -1,6 +1,6 @@
 testLog = function(name, message) { console.log("Test case: "+name+":", message); };
 assert =  require('assert');
-amqp = require('../amqp');
+amqp = require('../lib/amqp');
 
 var options = global.options || {};
 if (process.argv[2]) {

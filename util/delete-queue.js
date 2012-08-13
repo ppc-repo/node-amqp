@@ -1,4 +1,4 @@
-amqp = require('../amqp');
+amqp = require('../lib/amqp');
 
 var name = process.argv[2];
 console.log("exchange: " + name);

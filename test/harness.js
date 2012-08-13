@@ -1,7 +1,7 @@
 global.util =  require('util');
 puts = console.log;
 global.assert =  require('assert');
-global.amqp = require('../amqp');
+global.amqp = require('../lib/amqp');
 
 var options = global.options || {};
 if (process.argv[2]) {

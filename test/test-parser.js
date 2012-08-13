@@ -2,7 +2,7 @@
 // data packets. See https://github.com/postwait/node-amqp/issues/65
 
 function fresh_connection() {
-  var c = new (require('../amqp').Connection)();
+  var c = new (require('../lib/amqp').Connection)();
   c.write = function() {};
   c.emit('connect');
   return c;
