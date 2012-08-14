@@ -11,4 +11,6 @@
   { "url" : "http://github.com/ppc-repo/node-amqp/issues"
   }
 , "main": "./lib/amqpFactory"
+,"dependencies": {  "winston": "~0.6.2"
+    }
 }
