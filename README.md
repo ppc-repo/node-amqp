@@ -12,7 +12,14 @@ This project was forked from https://github.com/postwait/node-amqp
 ### git
 
 #### dependencies
-yum -y install zlib-devel openssl-devel cpio expat-devel gettext-devel gcc perl-ExtUtils-MakeMaker
+
+    yum install gettext-devel expat-devel curl-devel zlib-devel openssl-devel
+    cd /usr/local/src
+    wget http://kernel.org/pub/software/scm/git/git-1.7.5.tar.gz
+    tar xzvf git-1.7.5.tar.gz
+    cd git-1.7.5
+    make prefix=/usr/local all
+    make prefix=/usr/local install
 
 ### node
 
@@ -30,4 +37,10 @@ yum -y install zlib-devel openssl-devel cpio expat-devel gettext-devel gcc perl-
   cd npm
   make install # or `make link` for bleeding edge
   ```
+
+## node-amqp
+
+  git clone://
+  cd
+  npm install
 
