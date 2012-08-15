@@ -1,5 +1,6 @@
 var config = exports;
-var winston = require('winston');
+
+
 
 config.gateway = {
     enabled : true
@@ -29,7 +30,8 @@ config.alerts = {
     enabled : true
     , name : 'alert'
     , usedForLogging : true
-    , loggerType : winston.transports.WinstonAmqp
+    , loggerType : 'amqpLogger'
+    , loggerTypex : require('../../lib/amqpFactory').amqpLogger
     , options : { host: 'arch-lb-01.dev.purchasingpwr.com'
         , port: 5672
         , login: 'alert-client'
