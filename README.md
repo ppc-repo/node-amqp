@@ -9,8 +9,12 @@ This project was forked from https://github.com/postwait/node-amqp
 
 ## Installation Instructions ##
 
-**node.js**
+    **node.js**
+    install node
 
-**npm**
+
+    **npm**
+
+    install npm
 
 
