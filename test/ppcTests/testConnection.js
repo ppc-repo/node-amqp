@@ -8,12 +8,22 @@
 var amqpFactory = require('../../lib/amqpFactory');
 var assert = require('assert');
 var config = require('../config/config');
+var winston = require('winston');
 
-process.on('uncaughtException', function(err) {
-    console.log(err);
+//process.on('uncaughtException', function(err) {
+//    console.log(err);
+//});
+
+var logger = new (winston.Logger)({
+    transports: [
+        new (winston.transports.Console)({colorize: 'true', handleExceptions: false, levels: 'info', timestamp:true})
+    ]
 });
+process.logger = logger;
 
-var connection =  amqpFactory.getConnection(config.gateway);
+//logger.add(winston.transports.WinstonAmqp , { appName: 'amqpTest', level : 'info' }) ;
+
+var connection =  amqpFactory.getConnection(undefined, config.alerts);
 console.log(connection);
 
 
