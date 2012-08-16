@@ -11,8 +11,6 @@ This project was forked from https://github.com/postwait/node-amqp
 
 ### git
 
-#### dependencies
-
     yum install gettext-devel expat-devel curl-devel zlib-devel openssl-devel
     cd /usr/local/src
     wget http://kernel.org/pub/software/scm/git/git-1.7.5.tar.gz
