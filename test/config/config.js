@@ -5,6 +5,7 @@ var config = exports;
 config.gateway = {
     enabled : true
     , name : 'gateway'
+    , syncWaitSec : 60
     , options : { host: 'arch-lb-01.dev.purchasingpwr.com'
         , port: 5672
         , login: 'svc-router'
@@ -29,6 +30,7 @@ config.gateway = {
 config.alerts = {
     enabled : true
     , name : 'alert'
+    , syncWaitSec : 60
     , usedForLogging : true
     , loggerType : 'amqpLogger'
     , loggerTypex : require('../../lib/amqpFactory').amqpLogger
