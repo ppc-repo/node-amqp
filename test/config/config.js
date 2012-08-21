@@ -29,6 +29,7 @@ config.gateway = {
 
 config.alerts = {
     enabled : true
+    , type : 'logger'
     , name : 'alert'
     , syncWaitSec : 60
     , usedForLogging : true
@@ -75,6 +76,7 @@ config.alerts = {
         , altersFatal : { enabled : true
             , name : 'alerts-fatal'
             , options: {passive: false, durable: true, exclusive: false, autoDelete: false}
-            , routingKeys: ['*.fatal.log']}
+            , routingKeys: ['*.fatal.log']
+            , callback : undefined }
     }
 };
