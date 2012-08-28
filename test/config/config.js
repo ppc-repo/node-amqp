@@ -8,6 +8,7 @@ config.connections = [{ vhost : 'message-services'
                        , password: 'svc-router'
                        , heartbeat : 0
                        , enabled : true
+                       , defaultRouterConnection : true
                        , implOptions: {reconnect: true, reconnectBackoffStrategy: 'linear', reconnectBackoffTime: 1000}
                     },
                      { vhost : 'control-services'
@@ -17,6 +18,7 @@ config.connections = [{ vhost : 'message-services'
                        , password: 'svc-router'
                        , heartbeat : 0
                        , enabled : true
+                       , defaultRouterConnection : false
                        , implOptions: {reconnect: true, reconnectBackoffStrategy: 'linear', reconnectBackoffTime: 1000}
                     }];
 

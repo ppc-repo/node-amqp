@@ -25,8 +25,17 @@ process.logger = logger;
 
 //var connection =  amqpFactory.getConnection(undefined, config.gateway);
 //amqpFactory.initConnection(config.connections);
-amqpFactory.initConnection('../test/config/config.js');
-//console.log(connection);
+amqpFactory.initConnection('../test/config/config.js', function(err, defaultConn) {
+    console.log(defaultConn);
+    var y = amqpFactory.defaultConnection();
+    console.log(y);
+    var z =  amqpFactory.getConnection('control-services');
+    console.log(z);
+});
+
+//var x = amqpFactory.defaultConnection();
+
+//setTimeout( console.log(amqpFactory.defaultConnection()),1000 * 10);
 
 
 
