@@ -1,82 +1,89 @@
 var config = exports;
 
 
-
-config.gateway = {
-    enabled : true
-    , name : 'gateway'
-    , syncWaitSec : 60
-    , options : { host: 'arch-lb-01.dev.purchasingpwr.com'
-        , port: 5672
-        , login: 'svc-router'
-        , password: 'svc-router'
-        , vhost: 'communication-external'
-        , heartbeat : 10
-    }
-    , implOptions : { defaultExchangeName: 'svc.gateway'
-        , reconnect: true
-        , reconnectBackoffStrategy: 'linear'
-        , reconnectBackoffTime: 1000
-    }
-    , exchangeConnectParams: {
-        type: 'direct'
-        , durable: true
-        , passive: false
-        , autoDelete: false
-    }
-};
+config.connections = [{ vhost : 'message-services'
+                       , host: 'arch-lb-01.dev.purchasingpwr.com'
+                       , port: 5672
+                       , login: 'svc-router'
+                       , password: 'svc-router'
+                       , heartbeat : 0
+                       , enabled : true
+                       , implOptions: {reconnect: true, reconnectBackoffStrategy: 'linear', reconnectBackoffTime: 1000}
+                    },
+                     { vhost : 'control-services'
+                       , host: 'arch-lb-01.dev.purchasingpwr.com'
+                       , port: 5672
+                       , login: 'svc-router'
+                       , password: 'svc-router'
+                       , heartbeat : 0
+                       , enabled : true
+                       , implOptions: {reconnect: true, reconnectBackoffStrategy: 'linear', reconnectBackoffTime: 1000}
+                    }];
 
 
-config.alerts = {
-    enabled : true
-    , type : 'logger'
-    , name : 'alert'
-    , syncWaitSec : 60
-    , usedForLogging : true
-    , loggerType : 'amqpLogger'
-    , loggerTypex : require('../../lib/amqpFactory').amqpLogger
-    , options : { host: 'arch-lb-01.dev.purchasingpwr.com'
-        , port: 5672
-        , login: 'alert-client'
-        , password: 'alert-client'
-        , vhost: 'control-channel'
-        , heartbeat : 55
-    }
-    , implOptions : { defaultExchangeName: 'control.gateway'
-        , reconnect: true
-        , reconnectBackoffStrategy: 'linear'
-        , reconnectBackoffTime: 1000
-    }
-    , exchangeConnectParams: {
-        type: 'topic'
-        , durable: true
-        , passive: false
-        , autoDelete: false
-    }
-    , queues: { alertsTrace : { enabled : true
-        , name : 'alerts-trace'
-        , options: {passive: false, durable: false, exclusive: false, autoDelete: false}
-        , routingKeys: ['*.trace.log'] }
-        , alertsDebug : { enabled : true
-            , name : 'alerts-debug'
-            , options: {passive: false, durable: false, exclusive: false, autodDlete: false}
-            , routingKeys: ['*.debug.log']}
-        , alertsInfo : { enabled : true
-            , name : 'alerts-info'
-            , options: {passive: false, durable: false, exclusive: false, autoDelete: false}
-            , routingKeys: ['*.info.log']}
-        , alertsWarn : { enabled : true
-            , name : 'alerts-warn'
-            , options: {passive: false, durable: true, exclusive: false, autoDelete: false}
-            , routingKeys: ['*.warn.log']}
-        , alertsError : { enabled : true
-            , name : 'alerts-error'
-            , options: {passive: false, durable: true, exclusive: false, autoDelete: false}
-            , routingKeys: ['*.error.log']}
-        , altersFatal : { enabled : true
-            , name : 'alerts-fatal'
-            , options: {passive: false, durable: true, exclusive: false, autoDelete: false}
-            , routingKeys: ['*.fatal.log']
-            , callback : undefined }
-    }
-};
+config.exchanges = [
+                    { name : 'svc.gateway'
+                    , vhost : 'message-services'
+                    , isDefault : true
+                    , enabled : true
+                    , options : {type: 'direct', durable: true , passive: false, autoDelete: false, arguments : {'alternate-exchange' :	'undeliverable.gateway'}}
+                    },
+                    { name : 'undeliverable.gateway'
+                     , vhost : 'message-services'
+                     , isDefault : false
+                     , enabled : true
+                     , options : {type: 'topic', durable: true , passive: false, autoDelete: false, arguments : {}}
+                    },
+                    { name : 'control.gateway'
+                    , vhost : 'control-services'
+                    , isDefault : true
+                    , enabled : true
+                    , options : {type: 'topic', durable: true , passive: false, autoDelete: false, arguments :  {}}
+                    }
+                   ];
+
+
+config.queues = [
+                 { name : 'undeliverable.messages'
+                 , exchange : 'svc.gateway'
+                 , enabled : true
+                 , options: {passive: false, durable: true, exclusive: false, autoDelete: false}
+                 , routingKeys: ['#']
+                 },
+                 { name : 'alert.trace'
+                 , exchange : 'control.gateway'
+                 , enabled : true
+                 , options: {passive: false, durable: true, exclusive: false, autoDelete: false}
+                 , routingKeys: ['*.alter.log']
+                 },
+                 { name : 'alert.debug'
+                 , exchange : 'control.gateway'
+                 , enabled : true
+                 , options: {passive: false, durable: true, exclusive: false, autoDelete: false}
+                 , routingKeys: ['*.debug.log']
+                 },
+                 { name : 'alert.info'
+                 , exchange : 'control.gateway'
+                 , enabled : true
+                 , options: {passive: false, durable: true, exclusive: false, autoDelete: false}
+                 , routingKeys: ['*.info.log']
+                 },
+                 { name : 'alert.warn'
+                 , exchange : 'control.gateway'
+                 , enabled : true
+                 , options: {passive: false, durable: true, exclusive: false, autoDelete: false}
+                 , routingKeys: ['*.warn.log']
+                 },
+                 { name : 'alert.error'
+                 , exchange : 'control.gateway'
+                 , enabled : true
+                 , options: {passive: false, durable: true, exclusive: false, autoDelete: false}
+                 , routingKeys: ['*.error.log']
+                 } ,
+                 { name : 'alert.fatal'
+                 , exchange : 'control.gateway'
+                 , enabled : true
+                 , options: {passive: false, durable: true, exclusive: false, autoDelete: false}
+                 , routingKeys: ['*.fatal.log']
+                 }
+];

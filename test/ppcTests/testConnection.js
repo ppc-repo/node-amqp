@@ -23,8 +23,10 @@ process.logger = logger;
 
 //logger.add(winston.transports.WinstonAmqp , { appName: 'amqpTest', level : 'info' }) ;
 
-var connection =  amqpFactory.getConnection(undefined, config.alerts);
-console.log(connection);
+//var connection =  amqpFactory.getConnection(undefined, config.gateway);
+//amqpFactory.initConnection(config.connections);
+amqpFactory.initConnection('../test/config/config.js');
+//console.log(connection);
 
 
 
