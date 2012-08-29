@@ -25,17 +25,42 @@ process.logger = logger;
 
 //var connection =  amqpFactory.getConnection(undefined, config.gateway);
 //amqpFactory.initConnection(config.connections);
-amqpFactory.initConnection('../test/config/config.js', function(err, defaultConn) {
-    console.log(defaultConn);
-    var y = amqpFactory.defaultConnection();
-    console.log(y);
-    var z =  amqpFactory.getConnection('control-services');
-    console.log(z);
-});
+amqpFactory.initConnection('../test/config/config.js');
+//, function(err, defaultConn)
+//{
+   // console.log(defaultConn);
+//    var y = amqpFactory.defaultConnection();
+//    console.log(y);
+//    var z =  amqpFactory.getConnection('control-services');
+//    console.log(z);
+//});
+setTimeout(pub, 10 * 1000);
 
+
+
+
+
+
+function pub() {
+    //console.log(amqpFactory.defaultConnection());
+    //amqpFactory.publish('control.gateway', 'overseer.state-broadcast.router', {name: 'test'}, { mandatory : true,
+    //    immediate : false,
+    //    deliveryMode : 1 }, true);
+    var router = {
+        defaultTimeOut : 60
+        , exchange :  'svc.gateway'
+        , vhost : 'message-services' }
+
+    amqpFactory.publishMessage(router, 'sync', '1222343434', 'test',  '</test>', {replyTo : '1222343434'}, function(err, msg) {
+
+        console.log(err);
+        console.log(msg);
+
+    });
+}
 //var x = amqpFactory.defaultConnection();
 
 //setTimeout( console.log(amqpFactory.defaultConnection()),1000 * 10);
 
-
+//publishMessage(connectionOptions, transportType, guid, routingkey,  msg, options, callback) {
 

@@ -9,7 +9,7 @@ config.connections = [{ vhost : 'message-services'
                        , heartbeat : 0
                        , enabled : true
                        , defaultRouterConnection : true
-                       , implOptions: {reconnect: true, reconnectBackoffStrategy: 'linear', reconnectBackoffTime: 1000}
+                       , implOptions: {defaultExchangeName: 'svc.gateway', reconnect: true, reconnectBackoffStrategy: 'linear', reconnectBackoffTime: 1000}
                     },
                      { vhost : 'control-services'
                        , host: 'arch-lb-01.dev.purchasingpwr.com'
@@ -19,7 +19,7 @@ config.connections = [{ vhost : 'message-services'
                        , heartbeat : 0
                        , enabled : true
                        , defaultRouterConnection : false
-                       , implOptions: {reconnect: true, reconnectBackoffStrategy: 'linear', reconnectBackoffTime: 1000}
+                       , implOptions: {defaultExchangeName: 'control.gateway', reconnect: true, reconnectBackoffStrategy: 'linear', reconnectBackoffTime: 1000}
                     }];
 
 
@@ -41,6 +41,12 @@ config.exchanges = [
                     , isDefault : true
                     , enabled : true
                     , options : {type: 'topic', durable: true , passive: false, autoDelete: false, arguments :  {}}
+                    , logger : { appender : require('../../lib/amqpFactory').amqpLogger
+                        , logLevel : 'info'
+                        , name : 'queueLogger'
+                        , appName : 'router'
+                        , publishOptions : { mandatory : true, immediate : false, deliveryMode : 1}
+                    }
                     }
                    ];
 
