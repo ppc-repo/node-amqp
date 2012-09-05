@@ -52,6 +52,12 @@ config.exchanges = [
 
 
 config.queues = [
+                 { name : 'admin.overseer'
+                 , exchange : 'control.gateway'
+                 , enabled : true
+                 , options: {passive: false, durable: false, exclusive: false, autoDelete: false}
+                 , routingKeys: ['#']
+                 },
                  { name : 'undeliverable.messages'
                  , exchange : 'svc.gateway'
                  , enabled : true
@@ -95,3 +101,10 @@ config.queues = [
                  , routingKeys: ['*.fatal.log']
                  }
 ];
+
+config.riak = {
+    host: '10.191.11.151',
+    port: 8098,
+    api: 'http',
+    metaOptions: {returnbody : true}
+}
