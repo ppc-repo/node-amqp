@@ -56,7 +56,7 @@ config.queues = [
                  , exchange : 'control.gateway'
                  , enabled : true
                  , options: {passive: false, durable: false, exclusive: false, autoDelete: false}
-                 , routingKeys: ['#']
+                 , routingKeys: ['overseer.state-broadcast.router']
                  },
                  { name : 'undeliverable.messages'
                  , exchange : 'svc.gateway'
