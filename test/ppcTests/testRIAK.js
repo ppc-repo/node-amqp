@@ -36,7 +36,8 @@ function delay() {
     //amqpFactory.publish('control.gateway', 'overseer.state-broadcast.router', {name: 'test'}, { mandatory : true,
     //    immediate : false,
     //    deliveryMode : 1 }, true);
-    amqpFactory.subscribe('admin.overseer', riakMessage);
+    //amqpFactory.subscribe('admin.overseer', {}, riakMessage);
+    console.info('ok waited long enough');
 
 
 }
@@ -47,31 +48,3 @@ function delay() {
 //publishMessage(connectionOptions, transportType, guid, routingkey,  msg, options, callback) {
 
 
-function riakMessage(payload, headers, deliveryInfo, msg) {
-
-    console.info(payload);
-    var bucket =  'stats';
-    var key  = payload.type + '-' + payload.processId;
-    console.info(key);
-    payload.savetime = new Date().toJSON();
-    riak.save(bucket, key, payload, config.riak.metaOptions,  function(err, result, meta) {
-
-        //console.log('result:' + util.inspect(result));
-        //console.log('meta:' + util.inspect(meta));
-
-        if(meta.statusCode === 200)  {
-            msg.acknowledge();
-        }
-        else {
-            if(err) console.log(err);
-            msg.reject();
-        }
-
-
-
-    });
-
-   // client.post(bucket,key, payload, options , function(){
-   //     console.log('fff');
-   // });
-}
